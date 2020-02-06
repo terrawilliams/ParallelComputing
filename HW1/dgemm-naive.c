@@ -29,11 +29,14 @@ void square_dgemm (int n, double* A, double* B, double* C)
         int prevI = 0;
       for( int i = 0; i < n - 3; i += 4)
       {
-          prevI = i;
-          C[i + j * n] += A[i + k * n] * B[k + j * n];
+          __m256d m1 = _mm256_load_ps(A + i + k * n);
+          __m256d m2 = _mm256_broadcast_ss(b + k + j * n);
+          __m256d m3 = _mm256_mul_ps(m1, m3);
+          _mm256_store_ps(C + i + j * n, m3);
+          /*C[i + j * n] += A[i + k * n] * B[k + j * n];
           C[(i + 1) + j * n] += A[(i + 1) + k * n] * B[k + j * n];
           C[(i + 2) + j * n] += A[(i + 2) + k * n] * B[k + j * n];
-          C[(i + 3) + j * n] += A[(i + 3) + k * n] * B[k + j * n];
+          C[(i + 3) + j * n] += A[(i + 3) + k * n] * B[k + j * n];*/
       }
       if(n % 4 != 0)
       {
