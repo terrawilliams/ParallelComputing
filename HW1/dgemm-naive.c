@@ -26,11 +26,12 @@ void square_dgemm (int n, double* A, double* B, double* C)
     /* For each column j of B */
     for (int k = 0; k < n; ++k)
     {
-      for( int i = 0; i < n; i += 2)
+      for( int i = 0; i < n - 1; i += 2)
       {
           C[i + j * n] += A[i + k * n] * B[k + j * n];
-          if((i + 1) < n)
-            C[(i + 1) + j * n] += A[(i + 1) + k * n] * B[k + j * n];
+          C[(i + 1) + j * n] += A[(i + 1) + k * n] * B[k + j * n];
       }
+      if(n % 2 == 0)
+          C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
     }
 }
