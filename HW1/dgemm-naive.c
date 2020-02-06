@@ -26,11 +26,11 @@ const char* dgemm_desc = "Naive, three-loop dgemm.";
 void square_dgemm (int n, double* A, double* B, double* C)
 {
   /* For each row i of A */
-  for (int j = 0; j < n; j += 4)
+  for (int j = 0; j < n; ++j)
     /* For each column j of B */
-    for (int k = 0; k < n; ++k)
+    for (int k = 0; k < n; k += 4)
     {
-      for( int i = 0; i < n; i++)
+      for( int i = 0; i < n; i++
       {
           __m256d m1 = _mm256_load_pd(A + i + k * n);
           __m256d m2 = _mm256_broadcast_sd(B + k + j * n);
