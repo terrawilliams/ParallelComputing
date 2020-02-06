@@ -13,6 +13,8 @@ LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKL
 
 */
 
+#include <intrin.h>
+
 const char* dgemm_desc = "Naive, three-loop dgemm.";
 
 /* This routine performs a dgemm operation
@@ -26,7 +28,6 @@ void square_dgemm (int n, double* A, double* B, double* C)
     /* For each column j of B */
     for (int k = 0; k < n; ++k)
     {
-        int prevI = 0;
       for( int i = 0; i < n - 3; i += 4)
       {
           __m256d m1 = _mm256_load_ps(A + i + k * n);
