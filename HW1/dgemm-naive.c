@@ -38,28 +38,23 @@ void square_dgemm (int n, double* A, double* B, double* C)
           m0 = _mm256_fmadd_pd(m1, m2, m0);
           _mm256_store_pd(C + i + j * n, m0);
       }
-
-      for(int i = n % 4; i > 0; i--)
+      if(n % 4 != 0)
       {
-          C[(n - i) + j * n] += A[(n - i) + k * n] * B[k + j * n];
-      }
-      /*if(n % 4 != 0)
-      {
-          if(n % 4 == 1)
+          if((n - 1) % 4 == 0)
           {
               C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
           }
-          else if(n % 4 == 2)
+          else if((n - 2) % 4 == 0)
           {
               C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
               C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
           }
-          else if(n % 4 == 3)
+          else if((n - 3) % 4 == 0)
           {
               C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
               C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
               C[(n - 3) + j * n] += A[(n - 3) + k * n] * B[k + j * n];
           }
-      }*/
+      }
     }
 }
