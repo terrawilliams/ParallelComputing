@@ -40,6 +40,5 @@ void square_dgemm (int n, double* A, double* B, double* C)
               C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];*/
       for(int i = prevI + 3; i < n; i ++)
           C[i + j * n] += A[i + k * n] * B[k + j * n];
-      }
     }
 }
