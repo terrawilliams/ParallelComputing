@@ -33,7 +33,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
       for( int i = 0; i < n - 3; i += 4)
       {
           __m256d m1 = _mm256_load_pd(A + i + k * n);
-          __m256d m2 = _mm256_broadcast_sd(B + k + j * n);
+          __m256d m2 = _mm256_load_pd(B + k + j * n);
           //__m256d m3 = _mm256_mul_pd(m1, m2);
           __m256d m0 = _mm256_load_pd(C + i + j * n);
           m0 = _mm256_fmadd_pd(m1, m2, m0);
