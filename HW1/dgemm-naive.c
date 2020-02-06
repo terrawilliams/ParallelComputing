@@ -35,11 +35,25 @@ void square_dgemm (int n, double* A, double* B, double* C)
           C[(i + 2) + j * n] += A[(i + 2) + k * n] * B[k + j * n];
           C[(i + 3) + j * n] += A[(i + 3) + k * n] * B[k + j * n];
       }
-      /*if(n % 3 != 0) {
-          C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-          if (n % 2 == 0)
-              C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];*/
-      for(int i = prevI + 4; i < n; i ++)
-          C[i + j * n] += A[i + k * n] * B[k + j * n];
+      /*for(int i = prevI + 4; i < n; i ++)
+          C[i + j * n] += A[i + k * n] * B[k + j * n];*/
+      if(n % 4 != 0)
+      {
+          if((n - 1) % 4 == 0)
+          {
+              C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
+          }
+          else if((n - 2) % 4 == 0)
+          {
+              C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
+              C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
+          }
+          else if((n - 3) % 4 == 0)
+          {
+              C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
+              C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
+              C[(n - 3) + j * n] += A[(n - 3) + k * n] * B[k + j * n];
+          }
+      }
     }
 }
