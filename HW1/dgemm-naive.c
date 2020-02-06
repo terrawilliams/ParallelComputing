@@ -30,7 +30,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
     /* For each column j of B */
     for (int k = 0; k < n; k++)
     {
-
+#pragma prefetch
       for( int i = 0; i < n - 3; i += 4)
       {
           __m256d m1 = _mm256_load_pd(A + i + k * n);
