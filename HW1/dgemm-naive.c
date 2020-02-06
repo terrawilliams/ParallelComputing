@@ -44,12 +44,12 @@ void square_dgemm (int n, double* A, double* B, double* C)
           {
               C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
           }
-          else if((n - 2) % 4 == 0)
+          else if(n % 4 == 2)
           {
               C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
               C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
           }
-          else if((n - 3) % 4 == 0)
+          else if(n % 4 == 3)
           {
               C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
               C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
