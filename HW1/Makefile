@@ -1,6 +1,6 @@
 # On Bridges we will check versus your performance versus Intel MKL library's BLAS. 
 
-CC = icc
+CC = gcc
 OPT = -Ofast
 CFLAGS = -Wall -std=gnu99 $(OPT) -axCORE-AVX2 -mtune=haswell
 #MKLROOT = /opt/intel/composer_xe_2013.1.117/mkl
