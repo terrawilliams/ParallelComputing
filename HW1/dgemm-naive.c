@@ -40,7 +40,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
       }
       for(int i = 0; i < n & 4; i ++)
       {
-          C[(n - i + 1) + j * n] += A[(n - i + 1) + k * n] * B[k + j * n];
+          C[(n - i - 1) + j * n] += A[(n - i - 1) + k * n] * B[k + j * n];
       }
     }
 }
