@@ -13,6 +13,7 @@ LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKL
 
 */
 
+#include <stdio.h>
 #include <intrin.h>
 
 const char* dgemm_desc = "Naive, three-loop dgemm.";
