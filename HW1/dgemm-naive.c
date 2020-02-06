@@ -36,7 +36,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
           __m256d m1 = _mm256_load_pd(A + i + k * n);
           __m256d m2 = _mm256_broadcast_sd(B + k + j * n);
           __m256d m3 = _mm256_mul_pd(m1, m3);
-          __m256d m0 = _mm256_load_pd(C + i + j * n)
+          __m256d m0 = _mm256_load_pd(C + i + j * n);
           m0 = _mm256_add_pd(m0, m3);
           _mm256_store_pd(C + i + j * n, m0);
           /*C[i + j * n] += A[i + k * n] * B[k + j * n];
