@@ -39,7 +39,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
     {
       for( int k = 0; k < n /*- 3*/; k++ /*+= 4*/)
       {
-          C[i + j * n] += AT[k + i * n] * B[k + j * n];
+          C[i + j * n] = AT[k + i * n] * B[k + j * n] + C[i + j * n];
           /*__m256d m1 = _mm256_load_pd(A + i + k * n);
           __m256d m2 = _mm256_set1_pd(*(B + k + j * n));
           __m256d m0 = _mm256_load_pd(C + i + j * n);
