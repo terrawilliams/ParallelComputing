@@ -25,7 +25,7 @@ const char* dgemm_desc = "Naive, three-loop dgemm.";
  * On exit, A and B maintain their input values. */    
 void square_dgemm (int n, double* A, double* B, double* C)
 {
-    double* AT[n * n];
+    double AT[n * n];
     for(int i = 0; i < n; i++)
     {
         for(int j = 0; j < n; j++)
