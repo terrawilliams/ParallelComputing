@@ -37,13 +37,14 @@ void square_dgemm (int n, double* A, double* B, double* restrict C)
         {
             int i_edge = min(BLOCK_SIZE, n - i1);
             int j_edge = min(BLOCK_SIZE, n - j1);
+            double * A2 = A + j1 * n + i1;
             double * AT2 = AT + j1 * n + i1;
             for (int i = 0; i < i_edge; i++)
             {
 #pragma ivdep
                 for (int j = 0; j < j_edge; j++)
                 {
-                    AT2[j * n + i] = A[i * n + j];
+                    AT2[j * n + i] = A2[i * n + j];
                 }
             }
         }
