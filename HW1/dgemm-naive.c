@@ -40,7 +40,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
         }
     }
 
-
+#pragma ivdep
     for(int j1 = 0; j1 < n; j1 += BLOCK_SIZE)
     {
         for(int i1 = 0; i1 < n; i1 += BLOCK_SIZE)
