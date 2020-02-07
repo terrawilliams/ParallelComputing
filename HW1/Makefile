@@ -28,4 +28,4 @@ benchmark-blas : benchmark.o dgemm-blas.o
 
 .PHONY : clean
 clean:
-	rm -f $(targets) $(objects) *.stdout
+	rm -f $(targets) $(objects) *.stdout *.optrpt
