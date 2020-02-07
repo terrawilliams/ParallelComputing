@@ -35,7 +35,7 @@ void square_dgemm (int n, double* A, double* B, double* restrict C)
     {
         for(int j1 = 0; j1 < n; j1 += BLOCK_SIZE)
         {
-            for (int i = 0; i < i_edge; i++)
+            for (int i = 0; i < min(n, i1 + BLOCK_SIZE); i++)
             {
 #pragma ivdep
                 for (int j = 0; j < min(n, j1 + BLOCK_SIZE); j++)
