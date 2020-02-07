@@ -31,7 +31,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
 
     for(int i1 = 0; i1 < n; i1 += BLOCK_SIZE)
     {
-        for (int i = i1; i < BLOCK_SIZE; i++) {
+        for (int i = i1; i < i1 + BLOCK_SIZE; i++) {
             for (int j = 0; j < n; j++) {
                 AT[j * n + i] = A[i * n + j];
             }
