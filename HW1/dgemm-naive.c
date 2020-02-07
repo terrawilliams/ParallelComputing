@@ -25,6 +25,14 @@ const char* dgemm_desc = "Naive, three-loop dgemm.";
  * On exit, A and B maintain their input values. */    
 void square_dgemm (int n, double* A, double* B, double* C)
 {
+    double* AT[n * n];
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            AT[j * n + i] = A[i * n + j];
+        }
+    }
   /* For each row i of A */
   for (int j = 0; j < n; ++j)
     /* For each column j of B */
@@ -32,7 +40,7 @@ void square_dgemm (int n, double* A, double* B, double* C)
     {
       for( int i = 0; i < n /*- 3*/; i++ /*+= 4*/)
       {
-          C[i + j * n] += A[i + k * n] * B[k + j * n];
+          C[i + j * n] += AT[i + k * n] * B[k + j * n];
           /*__m256d m1 = _mm256_load_pd(A + i + k * n);
           __m256d m2 = _mm256_set1_pd(*(B + k + j * n));
           __m256d m0 = _mm256_load_pd(C + i + j * n);
