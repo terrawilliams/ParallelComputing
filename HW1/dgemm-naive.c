@@ -35,8 +35,6 @@ void square_dgemm (int n, double* A, double* B, double* restrict C)
     {
         for(int j1 = 0; j1 < n; j1 += BLOCK_SIZE)
         {
-            /*int i_edge = min(BLOCK_SIZE, n - i1);
-            int j_edge = min(BLOCK_SIZE, n - j1);*/
             double * A2 = A + i1 * n + j1;
             double * AT2 = AT + j1 * n + i1;
             for (int i = 0; i < min(BLOCK_SIZE, n - i1); i++)
