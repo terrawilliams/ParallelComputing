@@ -17,7 +17,7 @@ LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKL
 #include <smmintrin.h>
 #include <immintrin.h>
 
-#define BLOCK_SIZE 256
+#define BLOCK_SIZE 64
 
 #define min(a,b) (((a)<(b))?(a):(b))
 
@@ -33,9 +33,13 @@ void square_dgemm (int n, double* A, double* B, double* C)
 #pragma loop_count min=31, max=769, avg=345
     for(int i1 = 0; i1 < n; i1 += BLOCK_SIZE)
     {
-        for (int i = i1; i < min(n, i1 + BLOCK_SIZE); i++) {
-            for (int j = 0; j < n; j++) {
-                AT[j * n + i] = A[i * n + j];
+        for(int j1 = 0; j1 < n; j1 += BLOCK_SIZE)
+        {
+            for (int i = i1; i < min(n, i1 + BLOCK_SIZE); i++)
+            {
+                for (int j = j1; j < min(n, j1 + BLOCK_SIZE); j++) {
+                    AT[j * n + i] = A[i * n + j];
+                }
             }
         }
     }
