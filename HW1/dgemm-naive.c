@@ -40,36 +40,47 @@ void square_dgemm (int n, double* A, double* B, double* C)
         }
     }
 
-  for (int j = 0; j < n; ++j)
-    for (int i = 0; i < n; i++)
+
+    for(int j1 = 0; j1 < n; j1 += BLOCK_SIZE)
     {
-#pragma vector unaligned
-      for( int k = 0; k < n /*- 3*/; k++ /*+= 4*/)
-      {
-          C[i + j * n] += AT[k + i * n] * B[k + j * n];
-          /*__m256d m1 = _mm256_load_pd(A + i + k * n);
-          __m256d m2 = _mm256_set1_pd(*(B + k + j * n));
-          __m256d m0 = _mm256_load_pd(C + i + j * n);
-          m0 = _mm256_fmadd_pd(m1, m2, m0);
-          _mm256_store_pd(C + i + j * n, m0);*/
-      }
-      /*if(n % 4 != 0)
-      {
-          if((n - 1) % 4 == 0)
-          {
-              C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-          }
-          else if((n - 2) % 4 == 0)
-          {
-              C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-              C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
-          }
-          else if((n - 3) % 4 == 0)
-          {
-              C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-              C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
-              C[(n - 3) + j * n] += A[(n - 3) + k * n] * B[k + j * n];
-          }
-        }*/
+        for(int i1 = 0; i1 < n; i1 += BLOCK_SIZE)
+        {
+            for(int k1 = 0; k1 < n; k1 += BLOCK_SIZE)
+            {
+                for (int j = j1; j < min(n, j1 + BLOCK_SIZE); ++j)
+                {
+                    for (int i = i1; i < min(n, i1 + BLOCK_SIZE); i++)
+                    {
+                        #pragma vector unaligned
+                        for (int k = k1; k < min(n, k1 + BLOCK_SIZE) /*- 3*/; k++ /*+= 4*/) {
+                            C[i + j * n] += AT[k + i * n] * B[k + j * n];
+                            /*__m256d m1 = _mm256_load_pd(A + i + k * n);
+                            __m256d m2 = _mm256_set1_pd(*(B + k + j * n));
+                            __m256d m0 = _mm256_load_pd(C + i + j * n);
+                            m0 = _mm256_fmadd_pd(m1, m2, m0);
+                            _mm256_store_pd(C + i + j * n, m0);*/
+                        }
+                        /*if(n % 4 != 0)
+                        {
+                            if((n - 1) % 4 == 0)
+                            {
+                                C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
+                            }
+                            else if((n - 2) % 4 == 0)
+                            {
+                                C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
+                                C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
+                            }
+                            else if((n - 3) % 4 == 0)
+                            {
+                                C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
+                                C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
+                                C[(n - 3) + j * n] += A[(n - 3) + k * n] * B[k + j * n];
+                            }
+                          }*/
+                    }
+                }
+            }
+        }
     }
 }
