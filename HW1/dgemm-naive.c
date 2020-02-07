@@ -30,14 +30,15 @@ const char* dgemm_desc = "Naive, three-loop dgemm.";
 void square_dgemm (int n, double* A, double* B, double* C)
 {
     double AT[n * n];
-#pragma loop_count min=31, max=769, avg=345
+//#pragma loop_count min=31, max=769, avg=345
     for(int i1 = 0; i1 < n; i1 += BLOCK_SIZE)
     {
         for(int j1 = 0; j1 < n; j1 += BLOCK_SIZE)
         {
             for (int i = i1; i < min(n, i1 + BLOCK_SIZE); i++)
             {
-                for (int j = j1; j < min(n, j1 + BLOCK_SIZE); j++) {
+                for (int j = j1; j < min(n, j1 + BLOCK_SIZE); j++)
+                {
                     AT[j * n + i] = A[i * n + j];
                 }
             }
