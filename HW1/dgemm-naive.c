@@ -30,7 +30,7 @@ const char* dgemm_desc = "Naive, three-loop dgemm.";
 void square_dgemm (int n, double* A, double* B, double* C)
 {
     double AT[n * n];
-
+#pragma loop_count min(31), max(769)
     for(int i1 = 0; i1 < n; i1 += BLOCK_SIZE)
     {
         for (int i = i1; i < min(n, i1 + BLOCK_SIZE); i++) {
@@ -45,32 +45,10 @@ void square_dgemm (int n, double* A, double* B, double* C)
             for (int i = 0; i < n; i++)
             {
 #pragma vector unaligned
-                for (int k = 0; k < n /*- 3*/; k++ /*+= 4*/) {
-                    C[i + j * n] += AT[k + i * n] * B[k + j * n];
-                    /*__m256d m1 = _mm256_load_pd(A + i + k * n);
-                    __m256d m2 = _mm256_set1_pd(*(B + k + j * n));
-                    __m256d m0 = _mm256_load_pd(C + i + j * n);
-                    m0 = _mm256_fmadd_pd(m1, m2, m0);
-                    _mm256_store_pd(C + i + j * n, m0);*/
-                }
-                /*if(n % 4 != 0)
+                for (int k = 0; k < n; k++)
                 {
-                    if((n - 1) % 4 == 0)
-                    {
-                        C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-                    }
-                    else if((n - 2) % 4 == 0)
-                    {
-                        C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-                        C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
-                    }
-                    else if((n - 3) % 4 == 0)
-                    {
-                        C[(n - 1) + j * n] += A[(n - 1) + k * n] * B[k + j * n];
-                        C[(n - 2) + j * n] += A[(n - 2) + k * n] * B[k + j * n];
-                        C[(n - 3) + j * n] += A[(n - 3) + k * n] * B[k + j * n];
-                    }
-                  }*/
+                    C[i + j * n] += AT[k + i * n] * B[k + j * n];
+                }
             }
         }
 }
