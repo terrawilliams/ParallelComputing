@@ -17,7 +17,7 @@ LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKL
 #include <smmintrin.h>
 #include <immintrin.h>
 
-#define BLOCK_SIZE 50
+#define BLOCK_SIZE 64
 
 #define min(a,b) (((a)<(b))?(a):(b))
 
