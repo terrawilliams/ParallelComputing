@@ -37,7 +37,7 @@ void square_dgemm (int n, double* A, double* B, double* restrict C)
             double * AT2 = AT + j1 * n + i1;
             for (int i = 0; i < min(BLOCK_SIZE, n - i1); i++)
             {
-#pragma ivdep
+//#pragma ivdep
                 for (int j = 0; j < min(BLOCK_SIZE, n - j1); j++)
                 {
                     AT2[j * n + i] = A2[i * n + j];
