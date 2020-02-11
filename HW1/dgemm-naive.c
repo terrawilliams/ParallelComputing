@@ -50,7 +50,7 @@ void square_dgemm (int n, double* A, double* B, double* restrict C)
         {
             for (int i = 0; i < n; i++)
             {
-//#pragma vector unaligned
+#pragma vector unaligned
                 for (int k = 0; k < n; k++)
                 {
                     C[i + j * n] += AT[k + i * n] * B[k + j * n];
